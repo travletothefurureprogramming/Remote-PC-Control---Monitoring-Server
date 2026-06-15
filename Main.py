@@ -115,7 +115,7 @@ def shutdown_api():
 
 
 @server.route("/api/actions/restart", methods=["POST"])
-def shutdown_api():
+def restart_api():
     data = request.json
     if data.get("action") == "restart":
         restart_pc()

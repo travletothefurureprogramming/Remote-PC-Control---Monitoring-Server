@@ -61,6 +61,14 @@
 
                         <div class="card-text fs-3">
 
+                            <button class="btn btn-primary btn-lg w-100 mt-4" onclick="shutdown_pc()">
+                                Shutdown PC
+                            </button>
+                            
+                            <button class="btn btn-primary btn-lg w-100 mt-4" onclick="restart_pc()">
+                                Restart PC
+                            </button>
+
                             <button class="btn btn-primary btn-lg w-100 mt-4" onclick="sleep_pc()">
                                 Put PC to Sleep
                             </button>
@@ -113,6 +121,26 @@
                 document.getElementById("volume").innerHTML = data.volume + "%"
             })
             .catch(error => console.error('Error:', error));
+        }
+
+        function shutdown_pc(){
+            fetch("http://192.168.1.10:8080/api/actions/shutdown", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ action: "shutdown" })
+            });
+        }
+
+        function restart_pc(){
+            fetch("http://192.168.1.10:8080/api/actions/restart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ action: "restart" })
+            });
         }
 
         function sleep_pc(){
