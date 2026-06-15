@@ -54,7 +54,47 @@
                 </div>
             </div>
 
+            <div class="col-md-6"> 
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Power Controls</h5>
 
+                        <div class="card-text fs-3">
+
+                            <button class="btn btn-primary btn-lg w-100 mt-4" onclick="sleep_pc()">
+                                Put PC to Sleep
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6"> 
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Volume</h5>
+                        
+                        <div class="card-text fs-3">
+
+                            <p id="volume">
+                                Loading.....
+                            </p>
+
+                            <button class="btn btn-primary btn-lg w-100 mt-4" onclick="increase_volume()">
+                                Increase Volume
+                            </button>
+
+                            <button class="btn btn-primary btn-lg w-100 mt-4" onclick="decrease_volume()">
+                                Decrease Volume
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -70,9 +110,42 @@
                 document.getElementById("disk").innerHTML = data.disk + "%";
                 document.getElementById("net_sent").innerHTML = data.net_sent + " Sent bps";
                 document.getElementById("net_recv").innerHTML = data.net_recv + " Recv bps";
-
+                document.getElementById("volume").innerHTML = data.volume + "%"
             })
             .catch(error => console.error('Error:', error));
+        }
+
+        function sleep_pc(){
+            fetch("http://192.168.1.10:8080/api/actions/sleep", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ action: "sleep" })
+            });
+
+        }
+
+        function increase_volume() {
+            fetch("http://192.168.1.10:8080/api/actions/volume", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ action: "increase" })
+            });
+
+        }
+
+        function decrease_volume() {
+            fetch("http://192.168.1.10:8080/api/actions/volume", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ action: "decrease" })
+            });
+
         }
 
         setInterval(updateSystemInfo, 1000);
