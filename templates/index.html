@@ -44,6 +44,17 @@
                 </div>
             </div>
 
+            <div class="col-md-6"> 
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Network Usage</h5>
+                        <p class="card-text fs-3" id="net_sent">Loading...</p>
+                        <p class="card-text fs-3" id="net_recv">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+
 
         </div>
 
@@ -57,6 +68,9 @@
                 document.getElementById("cpu").innerHTML = data.cpu + "%";
                 document.getElementById("ram").innerHTML = data.ram + "%";
                 document.getElementById("disk").innerHTML = data.disk + "%";
+                document.getElementById("net_sent").innerHTML = data.net_sent + " Sent bps";
+                document.getElementById("net_recv").innerHTML = data.net_recv + " Recv bps";
+
             })
             .catch(error => console.error('Error:', error));
         }
