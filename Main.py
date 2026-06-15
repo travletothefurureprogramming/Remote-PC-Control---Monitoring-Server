@@ -48,6 +48,13 @@ def shutdown_pc():
 def restart_pc():
     os.system("shutdown /r")
 
+def get_battery():
+    try:
+        battery = psutil.sensors_battery().percent
+        return battery
+    except:
+        return "N/A"
+
 def get_volume():
 
     current_volume = volume.GetMasterVolumeLevelScalar() * 100
@@ -83,7 +90,8 @@ def return_system_info():
         "disk": get_disk_usage(),
         "net_sent": net_sent,
         "net_recv": net_recv,
-        "volume":get_volume()
+        "volume":get_volume(),
+        "battery":get_battery()
     }
     return jsonify(system_info)
 
