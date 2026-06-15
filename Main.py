@@ -9,9 +9,12 @@ def get_ram():
     return psutil.virtual_memory().percent
 
 def get_disk_usage():
-    return psutil.disk_io_counters().write_bytes, psutil.disk_io_counters().read_bytes
+    usage = psutil.disk_usage('/')
+    return usage.percent
+
 
 server = Flask(__name__)
+CORS()
 
 @server.route("/")
 def dashboard():
