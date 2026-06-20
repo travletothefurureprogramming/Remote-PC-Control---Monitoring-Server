@@ -4,7 +4,8 @@ import psutil
 import time
 import os
 import threading
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from pycaw.pycaw import AudioUtilities
+import uptime
 
 devices = AudioUtilities.GetSpeakers()
 
@@ -38,6 +39,9 @@ def network_monitor():
 
         old_sent = new_sent
         old_recv = new_recv
+
+def get_uptime():
+    return uptime.uptime()
 
 def sleep_pc():
     os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
@@ -91,7 +95,8 @@ def return_system_info():
         "net_sent": net_sent,
         "net_recv": net_recv,
         "volume":get_volume(),
-        "battery":get_battery()
+        "battery":get_battery(),
+        "uptime":get_uptime()
     }
     return jsonify(system_info)
 
@@ -128,6 +133,24 @@ def restart_api():
     if data.get("action") == "restart":
         restart_pc()
     return jsonify({"message": "ok", "status": 200})
+
+@server.route("/api/processes", methods=["GET"])
+def get_processes():
+    processes = []
+    for proc in psutil.process_iter():
+        with proc.oneshot():
+            try:
+                mem = proc.memory_info().rss / (1024 * 1024)
+                processes.append({
+                    "pid": proc.pid,
+                    "name": proc.name(),
+                    "mem": round(mem, 2)
+                })
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+    
+    top_procs = sorted(processes, key=lambda x: x['mem'], reverse=True)[:10]
+    return jsonify(top_procs)
 
 
 server.run("0.0.0.0", 8080)

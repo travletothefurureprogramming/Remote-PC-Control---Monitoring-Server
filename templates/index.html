@@ -147,6 +147,39 @@
             </div>
         </div>
 
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <h5>
+                        <i class="bi bi-clock"></i>
+                        Uptime
+                    </h5>
+
+
+                    <div class="value" id="uptime">N/A</div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5><i class="bi bi-list-task"></i> Top 10 Processes</h5>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">PID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">RAM (MB)</th>
+                    </tr>
+                </thead>
+                <tbody id="process-table-body">
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Network + Volume -->
@@ -315,6 +348,12 @@ function updateSystemInfo(){
 
         document.getElementById("disk-bar").style.width =
             data.disk + "%";
+        
+        document.getElementById("uptime").innerHTML =
+            data.uptime + "s";
+        
+        document.getElementById("uptime").style.width =
+            data.uptime + "s";
 
         if(data.battery !== "N/A"){
 
@@ -398,6 +437,28 @@ function decrease_volume(){
     });
 
 }
+
+function updateProcessList() {
+    fetch(`${SERVER}/api/processes`)
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.getElementById("process-table-body");
+        tbody.innerHTML = ""; 
+        
+        data.forEach(proc => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${proc.pid}</td>
+                    <td>${proc.name}</td>
+                    <td>${proc.mem} MB</td>
+                </tr>
+            `;
+        });
+    });
+}
+
+setInterval(updateProcessList, 5000);
+updateProcessList();
 
 setInterval(updateSystemInfo,1000);
 
