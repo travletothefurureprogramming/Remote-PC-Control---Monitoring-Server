@@ -1,6 +1,7 @@
 # Remote PC Control & Monitoring Server
 ### A web-based dashboard designed to monitor system performance and manage PC operations remotely. 
 
+<img width="1918" height="906" alt="image" src="https://github.com/user-attachments/assets/1ac9a423-f4ab-41ae-a36b-a78485c9ddb2" />
 
 ## Features
 
