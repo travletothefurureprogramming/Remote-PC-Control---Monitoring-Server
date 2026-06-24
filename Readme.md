@@ -22,3 +22,23 @@ The Remote PC Control & Monitoring Server includes the following key features:
 * Environment: The package suppourt **Windows**. But you can run in any Platform with the Source Code.
 * Hardware: I have tested it in a HP Victus **Gaming Laptop**
 
+## Platform Support
+
+* Windows
+
+## Install Instructions - How to run
+
+Windows:
+* Download the release from github
+* Open the .exe and then visit the url you show in the terminal
+* Thats it!!!
+
+For Developers:
+* Clone the repo: git clone https://github.com/travletothefurureprogramming/Remote-PC-Control---Monitoring-Server
+
+* Install requirements: pip install flask flask-cors psutil pycaw uptime
+
+* Run: python Main.py
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for more details. Copyright (c) 2026 Γρηγόριος Ιωσηφίδης
